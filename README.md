@@ -13,13 +13,13 @@ Initial version comes with the following features:
     * google.com
     * google.com,microsoft.com,github.com
   * Delete CSV after converting to XLSX (disabled by default)
-  * Append Timestamp to Filename (disabled by default)
+  * Append Timestamp to Filename (enabled by default)
 
 Credits
 ------------
 
 * Papa Parse - https://github.com/mholt/PapaParse
-* zipcelx https://github.com/egeriis/zipcelx
+* zipcelx - https://github.com/egeriis/zipcelx
 
 Contributing
 ------------
