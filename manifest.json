@@ -1,0 +1,28 @@
+{
+  "name": "Auto-Convert CSV to XLSX",
+  "version": "1.0",
+  "description": "Auto-Converts downloaded CSV files to XLSX",
+  "permissions": [
+    "storage",
+    "downloads",
+    "file://*"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true,
+    "open_in_tab": false
+  },
+  "background": {
+    "scripts": [
+      "papaparse.min.js",
+      "background.js",
+      "standalone.js"
+    ]
+  },
+  "icons": {
+    "16": "icon16x16.png",
+    "48": "icon48x48.png",
+    "128": "icon128x128.png"
+  },
+  "manifest_version": 2
+}
