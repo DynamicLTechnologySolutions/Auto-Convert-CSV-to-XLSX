@@ -3,16 +3,22 @@ var allDownloadIntervals = {};
 var domainWhiteList = "";
 var appendTimestamp = true;
 var deleteCSV = false;
+var removeTrailingNumbers = false;
+var addSpaceWhenCharacterCaseChange = false;
 
 chrome.runtime.onInstalled.addListener(function () {
     chrome.storage.sync.get({
         domainWhiteList: '',
         appendTimestamp: true,
         deleteCSV: false,
+        removeTrailingNumbers: false,
+        addSpaceWhenCharacterCaseChange: false
         }, function (userOptions) {
             domainWhiteList = userOptions.domainWhiteList;
             appendTimestamp = userOptions.appendTimestamp;
             deleteCSV = userOptions.deleteCSV;
+            removeTrailingNumbers = userOptions.removeTrailingNumbers;
+            addSpaceWhenCharacterCaseChange = userOptions.addSpaceWhenCharacterCaseChange;
     });
 });
 
@@ -22,15 +28,27 @@ chrome.runtime.onMessage.addListener(
         domainWhiteList = request.domainWhiteList;
         appendTimestamp = request.appendTimestamp;
         deleteCSV = request.deleteCSV;
+        removeTrailingNumbers = request.removeTrailingNumbers;
+        addSpaceWhenCharacterCaseChange = request.addSpaceWhenCharacterCaseChange;
         sendResponse({ Message: "Options Updated Successfully" });
     }
 );
 
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
     if (captureDownload(downloadItem)) {
-        if (appendTimestamp) {
-            var newCsvFileName = downloadItem.filename.split('.').slice(0, -1).join('.') + "_" + formatDate(new Date()) + "." + downloadItem.filename.split('.')[1];
-            suggest({ filename: newCsvFileName, conflictAction: "uniquify" });
+        var newDownloadFileName = downloadItem.filename;
+        if (appendTimestamp || removeTrailingNumbers || addSpaceWhenCharacterCaseChange) {
+            if (addSpaceWhenCharacterCaseChange) {
+                newDownloadFileName = newDownloadFileName.split('.').slice(0, -1).join('.').replace(/([A-Z])/g, ' $1').trim() + "." + newDownloadFileName.split('.')[1];
+            }
+            if (removeTrailingNumbers) {
+                newDownloadFileName = newDownloadFileName.split('.').slice(0, -1).join('.').replace(/\d+$/, '') + "." + newDownloadFileName.split('.')[1];
+            }
+            if (appendTimestamp) {
+                newDownloadFileName = newDownloadFileName.split('.').slice(0, -1).join('.') + "_" + formatDate(new Date()) + "." + newDownloadFileName.split('.')[1];
+            }
+
+            suggest({ filename: newDownloadFileName, conflictAction: "uniquify" });
         }
     }
 });

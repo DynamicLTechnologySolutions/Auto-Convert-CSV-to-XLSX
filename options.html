@@ -6,12 +6,13 @@
     <style>
         /* Customize the label (the container) */
         .container {
-            display: block;
+            display: inline-block;
             position: relative;
             padding-left: 35px;
             margin-bottom: 12px;
             cursor: pointer;
             font-size: 18px;
+            width: 503px;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -57,7 +58,7 @@
 
         /* Show the checkmark when checked */
         .container input:checked~.checkmark:after {
-            display: block;
+            display:block;
         }
 
         /* Style the checkmark/indicator */
@@ -86,16 +87,30 @@
             <input type="checkbox" id="chkDeleteCSV">
             <span class="checkmark"></span>
         </label>
+
+        <label class="container" >Remove Trailing Numbers from Filename
+            <input type="checkbox" id="chkRemoveTrailingNumbers">
+            <span class="checkmark"></span>
+        </label>
     </div>
     </br>
-    <label class="container">Append Timestamp to Filename (ensures unique filename)
-        <input type="checkbox" id="chkAppendTimeStamp">
-        <span class="checkmark"></span>
-    </label>
+    <div >
+        <label class="container">Append Timestamp to Filename (ensures unique filename)
+            <input type="checkbox" id="chkAppendTimeStamp">
+            <span class="checkmark"></span>
+        </label>
+        <label class="container" >Add space when character case changes (i.e 'ProjectTasks.xlsx' will become 'Project Tasks.xlsx')
+            <input type="checkbox" id="chkAddSpaceWhenCharacterCaseChange">
+            <span class="checkmark"></span>
+        </label>
+    </div>
     <span id="status" style="font-size: 14px;"></span>
     </br>
     </br>
-    <button id="save" style=" background-color: #4CAF50; background-image: none; border: none; color: white; padding: 15px 32px; width: 138px; border-radius: 12px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px;">Save</button>
+    <div style="text-align:right">
+        <button id="cancel" style=" background-color: #ec4758; background-image: none; border: none; color: white; padding: 15px 32px; width: 138px; border-radius: 12px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px;">Cancel</button>
+        <button id="save" style=" background-color: #18a689; background-image: none; border: none; color: white; padding: 15px 32px; width: 138px; border-radius: 12px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px;">Save</button>
+    </div>
 
     <script src="options.js"></script>
 </body>
